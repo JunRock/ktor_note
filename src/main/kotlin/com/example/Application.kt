@@ -3,6 +3,7 @@ package com.example
 import com.example.common.koin.appModules
 import com.example.plugins.configureDatabases
 import com.example.plugins.configureRouting
+import com.example.plugins.configureSecurity
 import com.example.plugins.configureSerialization
 import io.ktor.server.application.*
 import org.koin.ktor.plugin.Koin
@@ -18,5 +19,6 @@ fun Application.module() {
 
     configureSerialization()
     configureDatabases()
+    configureSecurity()
     configureRouting()
 }

@@ -4,6 +4,8 @@ import com.example.domain.board.entity.BoardDomain
 import com.example.domain.board.service.BoardService
 import io.ktor.http.*
 import io.ktor.server.application.*
+import io.ktor.server.auth.*
+import io.ktor.server.auth.jwt.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -13,10 +15,13 @@ import org.koin.ktor.ext.inject
 fun Route.configureBoard() {
     val boardService by inject<BoardService>()
     route("/api/board") {
-        post {
-            val boardRequest = call.receive<BoardRequest>()
-            val createBoard = boardService.createBoard(boardRequest,1)
-            call.respond(HttpStatusCode.OK,createBoard)
+        authenticate("auth-jwt") {
+            post {
+                val boardRequest = call.receive<BoardRequest>()
+                val principal = call.authentication.principal<JWTPrincipal>()!!
+                val createBoard = boardService.createBoard(boardRequest, principal.payload)
+                call.respond(HttpStatusCode.OK, createBoard)
+            }
         }
 
         get("/all") {

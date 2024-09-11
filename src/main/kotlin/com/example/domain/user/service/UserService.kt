@@ -25,7 +25,7 @@ open class UserService(
 
     fun loginUser(loginRequest: LoginRequest): TokenResponse {
         transaction {
-            val user = UserDomain.findByUsername(loginRequest.email)
+            val user = UserDomain.findByEmail(loginRequest.email)
             passwordHashProcessor.verifyPassword(loginRequest.password,user!!.password)
         }
         return TokenResponse(

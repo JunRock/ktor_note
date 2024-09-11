@@ -21,7 +21,7 @@ data class UserDTO(
 
 class UserDomain(id: EntityID<Int>) : IntEntity(id) {
     companion object : IntEntityClass<UserDomain>(User){
-        fun findByUsername(email: String): UserDomain? {
+        fun findByEmail(email: String): UserDomain? {
             return UserDomain.find { User.email eq email }.firstOrNull()
         }
     }  // User 테이블과 연결

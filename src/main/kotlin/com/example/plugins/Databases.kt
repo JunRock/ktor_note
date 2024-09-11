@@ -6,6 +6,8 @@ import io.ktor.server.application.*
 import org.flywaydb.core.Flyway
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.sql.StdOutSqlLogger
+import org.jetbrains.exposed.sql.addLogger
 import org.jetbrains.exposed.sql.transactions.transaction
 
 fun Application.configureDatabases() {
@@ -16,6 +18,7 @@ fun Application.configureDatabases() {
         password = "root"
     )
     transaction {
+        addLogger(StdOutSqlLogger)
         SchemaUtils.create(User,Board)
     }
 }

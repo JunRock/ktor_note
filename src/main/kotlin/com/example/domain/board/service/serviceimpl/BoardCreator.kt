@@ -8,9 +8,9 @@ import org.jetbrains.exposed.sql.transactions.transaction
 open class BoardCreator(
     private val userReader: UserReader
 ) {
-    fun create(boardRequest: BoardRequest, userId: Int):Int {
+    fun create(boardRequest: BoardRequest, email: String):Int {
         return transaction {
-            val user = userReader.readUser(userId)
+            val user = userReader.readUser(email)
             BoardDomain.new {
                 title = boardRequest.title
                 content = boardRequest.content

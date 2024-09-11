@@ -14,14 +14,16 @@ fun Application.configureSecurity() {
             realm = "ktor-sample"
             verifier(
                 JWT
-                .require(Algorithm.HMAC256("secret")) // JWT 시크릿 키 설정
-                .withAudience("ktor-practice")
-                .withIssuer("JunSeok")
-                .build()
+                    .require(Algorithm.HMAC256("secret")) // JWT 시크릿 키 설정
+                    .withAudience("ktor-practice")
+                    .withIssuer("JunSeok")
+                    .build()
             )
 
             validate { credential ->
-                if (credential.payload.audience.contains("ktor-practice")) JWTPrincipal(credential.payload) else null
+                if (credential.payload.getClaim("ktor-practice")
+                        .asString() != ""
+                ) JWTPrincipal(credential.payload) else null
             }
 
             challenge { _, _ ->

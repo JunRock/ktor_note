@@ -1,5 +1,6 @@
 package com.example.domain.board.service
 
+import com.auth0.jwt.interfaces.Payload
 import com.example.domain.board.entity.BoardDomain
 import com.example.domain.board.service.serviceimpl.BoardCreator
 import com.example.domain.board.service.serviceimpl.BoardDeleter
@@ -16,8 +17,11 @@ open class BoardService : KoinComponent {
     private val boardUpdater: BoardUpdater by inject()
     private val boardDeleter: BoardDeleter by inject()
 
-    fun createBoard(boardRequest: BoardRequest, userId: Int): Int {
-        return boardCreator.create(boardRequest, userId)
+    fun createBoard(boardRequest: BoardRequest, payload: Payload): Int {
+        println("payloadID = ${payload.id}")
+        println("payload.subject = ${payload.subject}")
+        println("payload.claims = ${payload.claims}")
+        return boardCreator.create(boardRequest, payload.getClaim("email").asString())
     }
 
     fun getAllBoard(): List<BoardResponse> {
