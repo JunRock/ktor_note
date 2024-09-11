@@ -1,5 +1,6 @@
 package com.example.route
 
+import com.example.auth.dto.request.LoginRequest
 import com.example.domain.user.entity.UserDTO
 import com.example.domain.user.service.UserService
 import io.ktor.http.*
@@ -16,6 +17,12 @@ fun Route.configureByeServer(){
             val user = call.receive<UserDTO>()
             service.createUser(user)
             call.respond(HttpStatusCode.Created)
+        }
+
+        post("/login"){
+            val user = call.receive<LoginRequest>()
+            val jwtToken = service.loginUser(user)
+            call.respond(HttpStatusCode.OK,jwtToken)
         }
     }
 }

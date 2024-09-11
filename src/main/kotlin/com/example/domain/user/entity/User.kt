@@ -9,15 +9,25 @@ import org.jetbrains.exposed.dao.id.IntIdTable
 
 object User: IntIdTable() {
     val username = varchar("username", 20)
-    val age = integer("age")
+    val email = varchar("email", 70)
+    val password = varchar("password", 100)
 }
 @Serializable
-data class UserDTO(val username: String, val age: Int)
+data class UserDTO(
+    val username: String,
+    val email: String,
+    val password: String
+)
 
 class UserDomain(id: EntityID<Int>) : IntEntity(id) {
-    companion object : IntEntityClass<UserDomain>(User)  // User 테이블과 연결
+    companion object : IntEntityClass<UserDomain>(User){
+        fun findByUsername(email: String): UserDomain? {
+            return UserDomain.find { User.email eq email }.firstOrNull()
+        }
+    }  // User 테이블과 연결
 
     var userId by User.id  // User 테이블의 컬럼
     var username by User.username
-    var age by User.age
+    var email by User.email
+    var password by User.password
 }

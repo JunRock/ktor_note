@@ -41,5 +41,8 @@ dependencies {
     implementation("io.insert-koin:koin-ktor:3.4.0")
     implementation("io.insert-koin:koin-logger-slf4j:3.4.0")
     implementation("io.arrow-kt:arrow-optics:1.0.1")
-
+    implementation("io.ktor:ktor-server-auth-jwt:2.0.0") // Ktor JWT 플러그인
+    implementation("com.auth0:java-jwt:4.0.0") // JWT 생성 및 검증을 위한 라이브러리
+    implementation("at.favre.lib:bcrypt:0.9.0")
+    implementation("org.flywaydb:flyway-core:8.0.0") // 속성 자동화를 위한 라이브러리
 }
