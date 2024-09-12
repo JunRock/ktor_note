@@ -18,9 +18,6 @@ open class BoardService : KoinComponent {
     private val boardDeleter: BoardDeleter by inject()
 
     fun createBoard(boardRequest: BoardRequest, payload: Payload): Int {
-        println("payloadID = ${payload.id}")
-        println("payload.subject = ${payload.subject}")
-        println("payload.claims = ${payload.claims}")
         return boardCreator.create(boardRequest, payload.getClaim("email").asString())
     }
 
